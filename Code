@@ -1,0 +1,68 @@
+arts_unknown = ['___1___','___2___','___3___','___4___']
+
+def word_substitute(sample,parts_unknown):
+        for  i in parts_unknown:
+             if i==sample:
+                return i
+ 
+        return None
+def replacment(old_word,new_word,list_sample):
+        new_list =[]
+        for i in list_sample:
+                if old_word != i:
+                        new_list.append(i)
+                else:
+                        new_list.append(new_word)
+        return new_list                
+                        
+                        
+        
+
+def choose_level():
+        sample1=''' ___1___  is a web-based Git ___2___ ___3___ ___4___. '''
+        sample2 = '''A ___1___ is a widely-used source code management system for software
+        development. It is a distributed revision control system with an emphasis on ___2___', data integrity,
+        and support for distributed, ___3___  workflows. ___1___  was initially designed and
+        developed in ___4___ by Linux kernel  for Linux kernel development.'''
+
+        sample3 = '''A ___1___ is created with the def keyword. You specify the inputs a ___1___ takes by
+        adding ___2___ separated by commas between the parentheses. ___1___ s by default return ___3___ if you
+        don't specify the value to return. ___2___ can be standard data types such as string, number, dictionary,
+        tuple, and ___4___ or can be more complicated such as objects and lambda functions.'''
+
+        user_choice = raw_input("Please choose your game level-> Level 1, Level 2,  Level 3  : ")
+
+        if (user_choice!='Level 1') and (user_choice!='Level 2') and (user_choice!='Level 3'):
+                user_choice = raw_input(" Please choose your level by 'exaclty' write: Level 1, Level 2, or Level 3  ")                
+
+        if (user_choice=='Level 1'):
+                return sample1
+        if (user_choice=='Level 2'):
+                return sample2
+        if (user_choice=='Level 3'):
+                return sample3
+
+def play_game(parts_unknown):
+        replaced = []
+        previous_unknown = {}
+        test=choose_level()
+        print (test)
+        test1 = test.split()
+        for word in test1:
+                r1 = word_substitute(word,parts_unknown)
+                r2 = word_substitute(word,previous_unknown)
+                if (r1!=None) and (r2==None):
+                        user_input = raw_input("What is your best guess for "+ r1+" ?")
+                        replaced.append(user_input)
+                        previous_unknown[r1] = user_input
+                        test1 = replacment(r1,user_input,test1)
+                        print (" ".join(test1))
+                elif (r1!=None) and (r2!=None):
+                        replaced.append(previous_unknown[r1])                                                                
+                else:
+                        replaced.append(word)
+                        
+        replaced =" ".join(replaced)
+        return replaced         
+                        
+print play_game(parts_unknown)
